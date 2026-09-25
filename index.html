@@ -1,1 +1,223 @@
-<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta charset="utf-8"><title>ANUJ Trading Journal</title><style>body{margin:0;background:#07101f;color:#eef5ff;font-family:Arial;text-align:center;padding:30px}h1{color:#39d6ff}p{color:#8ea2bf;line-height:1.6}.box{max-width:520px;margin:40px auto;padding:24px;background:#0d182a;border:1px solid #223451;border-radius:18px}code{color:#37e59a}</style></head><body><div class="box"><h1>ANUJ Trading Journal V3</h1><p>Android app wrapper is ready.</p><p><b>Important:</b> replace this <code>index.html</code> with the <code>index.html</code> from your GitHub repository.</p><p>The Android app will then open your complete journal directly, without Chrome.</p></div></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trade Journal Pro</title>
+<style>
+:root{--bg:#0b0f14;--panel:#111821;--panel2:#17202b;--text:#eef3f8;--muted:#91a0b2;--line:#263241;--accent:#6ea8fe;--green:#35d07f;--red:#ff6577;--yellow:#f6c85f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{display:flex;min-height:100vh}.side{width:230px;background:#0e141b;border-right:1px solid var(--line);padding:20px;position:sticky;top:0;height:100vh}.brand{font-size:20px;font-weight:800;margin-bottom:24px}.brand span{color:var(--accent)}.nav button{display:block;width:100%;padding:11px 12px;margin:5px 0;border:0;border-radius:9px;background:transparent;color:var(--muted);text-align:left}.nav button.active,.nav button:hover{background:var(--panel2);color:var(--text)}.main{flex:1;padding:24px;max-width:1500px;margin:auto;width:100%}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.top h1{margin:0;font-size:25px}.btn{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:10px 14px;border-radius:9px}.btn.primary{background:var(--accent);color:#07111d;border-color:var(--accent);font-weight:700}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px}.metric .label{font-size:12px;color:var(--muted)}.metric .value{font-size:25px;font-weight:800;margin-top:7px}.green{color:var(--green)}.red{color:var(--red)}.yellow{color:var(--yellow)}.section{margin-top:16px}.section h2{font-size:17px;margin:0 0 12px}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:900px}.table th,.table td{padding:10px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.table th{color:var(--muted);font-weight:600}.pill{padding:4px 8px;border-radius:999px;font-size:11px;background:var(--panel2)}.pill.win{color:var(--green)}.pill.loss{color:var(--red)}.pill.be{color:var(--yellow)}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;background:#0c1219;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px}.field textarea{min-height:80px;resize:vertical}.full{grid-column:1/-1}.checkgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.check{border:1px solid var(--line);background:#0c1219;padding:10px;border-radius:8px}.check input{margin-right:8px}.score{font-weight:800}.bar{height:10px;background:#202a35;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent)}.hidden{display:none}.empty{color:var(--muted);padding:20px;text-align:center}.chart{width:100%;height:240px}.legend{display:flex;gap:12px;color:var(--muted);font-size:12px}.small{font-size:12px;color:var(--muted)}.danger{color:var(--red)}@media(max-width:900px){.side{width:70px;padding:12px}.brand{font-size:0}.brand span{font-size:18px}.nav button{font-size:0;text-align:center}.nav button:first-letter{font-size:18px}.grid{grid-template-columns:repeat(2,1fr)}.two,.form{grid-template-columns:1fr}.main{padding:15px}.top h1{font-size:21px}}
+
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.calhead{font-size:11px;color:var(--muted);text-align:center;padding:5px}.day{min-height:62px;background:#0c1219;border:1px solid var(--line);border-radius:7px;padding:6px;font-size:11px}.day .r{font-weight:800;margin-top:8px}.day.pos{border-color:#236b48}.day.neg{border-color:#71333d}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.filters select{background:#0c1219;color:var(--text);border:1px solid var(--line);padding:8px;border-radius:8px}
+
+/* v3 mobile-first */
+.mobile-nav{display:none}.fab{position:fixed;right:18px;bottom:78px;width:56px;height:56px;border:0;border-radius:50%;background:var(--accent);color:#07111d;font-size:25px;font-weight:800;box-shadow:0 10px 30px #0008;z-index:20}
+.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.statbox{background:#0c1219;border:1px solid var(--line);border-radius:10px;padding:11px}.statbox b{font-size:18px}.progress{height:8px;background:#202a35;border-radius:99px;overflow:hidden;margin-top:7px}.progress i{display:block;height:100%;background:var(--accent)}
+@media(max-width:650px){
+ body{padding-bottom:58px}.side{display:none}.main{padding:12px}.top{margin-bottom:12px}.top .btn{padding:8px 10px}.top .btn:first-child{display:none}
+ .grid{grid-template-columns:repeat(2,1fr);gap:8px}.metric{padding:11px}.metric .value{font-size:20px}
+ .two{grid-template-columns:1fr}.card{padding:12px;border-radius:11px}.section{margin-top:10px}
+ .mobile-nav{display:flex;position:fixed;left:0;right:0;bottom:0;height:58px;background:#0e141b;border-top:1px solid var(--line);z-index:19;justify-content:space-around}
+ .mobile-nav button{border:0;background:transparent;color:var(--muted);font-size:10px;padding:7px 8px}.mobile-nav button.active{color:var(--text)}
+ .form{grid-template-columns:1fr 1fr;gap:9px}.form .full{grid-column:1/-1}.field input,.field select,.field textarea{padding:10px}
+ .checkgrid{grid-template-columns:1fr}.calendar{gap:3px}.day{min-height:54px;padding:5px;font-size:10px}
+ .table{min-width:760px}.fab{display:block}.chart{height:210px}
+}
+@media(min-width:651px){.fab{display:none}}
+
+</head>
+<body>
+<div class="app">
+<aside class="side">
+  <div class="brand">TRADE<span>JOURNAL</span></div>
+  <div class="nav">
+    <button data-page="dashboard" class="active">📊 Dashboard</button>
+    <button data-page="add">➕ Add Trade</button>
+    <button data-page="trades">📒 Trade History</button>
+    <button data-page="analytics">📈 Analytics</button>
+    <button data-page="checklist">☑ Checklist</button><button data-page="calendar">📅 Calendar</button><button data-page="prop">🛡 Prop Mode</button><button data-page="review">🧠 Review</button>
+  </div>
+  <div class="small" style="margin-top:30px">Local-first journal<br>Your data stays in this browser.</div>
+</aside>
+
+<nav class="mobile-nav">
+ <button data-page="dashboard">⌂<br>Home</button>
+ <button data-page="add">＋<br>Trade</button>
+ <button data-page="trades">▤<br>Trades</button>
+ <button data-page="analytics">◒<br>Stats</button>
+ <button data-page="prop">⚑<br>Risk</button>
+</nav>
+<button class="fab" onclick="showPage('add')">+</button><main class="main">
+  <div class="top"><h1 id="title">Dashboard</h1><div><button class="btn" onclick="exportCSV()">Export CSV</button> <button class="btn" onclick="exportData()">Export JSON</button> <button class="btn primary" onclick="showPage('add')">+ Add Trade</button></div></div>
+
+  <section id="dashboard" class="page">
+    <div class="grid" id="metrics"></div>
+    <div class="two section">
+      <div class="card"><h2>Monthly performance</h2><div id="monthlyChart"></div></div>
+      <div class="card"><h2>Outcome mix</h2><div id="outcomeChart"></div></div>
+    </div>
+    <div class="card section"><h2>Recent trades</h2><div id="recent"></div></div>
+  </section>
+
+  <section id="add" class="page hidden">
+    <div class="card">
+      <h2>Log a trade</h2>
+      <form id="tradeForm">
+      <div class="form">
+        <div class="field"><label>Date</label><input id="date" type="date" required></div>
+        <div class="field"><label>Open time</label><input id="open" type="time"></div>
+        <div class="field"><label>Close time</label><input id="close" type="time"></div>
+        <div class="field"><label>Pair / Instrument</label><input id="pair" value="XAUUSD" required></div>
+        <div class="field"><label>Direction</label><select id="direction"><option>LONG</option><option>SHORT</option></select></div>
+        <div class="field"><label>Outcome</label><select id="outcome"><option>WIN</option><option>LOSS</option><option>BREAKEVEN</option></select></div>
+        <div class="field"><label>Session</label><select id="session"><option>TOKYO</option><option>LONDON</option><option>NEW YORK</option><option>SYDNEY</option></select></div>
+        <div class="field"><label>Entry type</label><select id="entryType"><option>EXTREME</option><option>FLIP</option></select></div>
+        <div class="field"><label>Setup</label><select id="setup"><option>S/R</option><option>FIBONACCI</option><option>PATTERN</option><option>TREND LINE</option><option>OTHER</option></select></div>
+        <div class="field"><label>Timeframe</label><select id="tf"><option>5m</option><option>15m</option><option>30m</option><option>1H</option><option>4H</option><option>Daily</option></select></div>
+        <div class="field"><label>Pro / Counter</label><select id="trendType"><option>PRO</option><option>COUNTER</option></select></div>
+        <div class="field"><label>Bias</label><select id="bias"><option>BULLISH</option><option>BEARISH</option><option>NEUTRAL</option></select></div>
+        <div class="field"><label>Planned RR</label><input id="plannedRR" type="number" step="0.1" min="0"></div>
+        <div class="field"><label>Actual RR</label><input id="actualRR" type="number" step="0.1"></div>
+        <div class="field"><label>Risk %</label><input id="risk" type="number" step="0.01" min="0"></div>
+        <div class="field"><label>Pips captured / lost</label><input id="pips" type="number" step="0.1"></div>
+        <div class="field"><label>Entry price</label><input id="entry" type="number" step="any"></div>
+        <div class="field"><label>Stop loss</label><input id="sl" type="number" step="any"></div>
+        
+        <div class="field"><label>Setup grade</label><select id="grade"><option>A+</option><option>A</option><option>B</option><option>C</option></select></div>
+        <div class="field"><label>Emotion</label><select id="emotion"><option>Calm</option><option>Confident</option><option>Fearful</option><option>Greedy</option><option>FOMO</option><option>Revenge</option></select></div>
+        <div class="field"><label>Execution quality</label><select id="execution"><option>Perfect</option><option>Good</option><option>Average</option><option>Poor</option></select></div>
+<div class="field"><label>Before screenshot</label><input id="beforeImg" type="file" accept="image/*"></div>
+        <div class="field"><label>After screenshot</label><input id="afterImg" type="file" accept="image/*"></div>
+        <div class="field full"><label>Trade logic / notes</label><textarea id="notes" placeholder="Why did you take this trade?"></textarea></div>
+        <div class="field full"><label>Entry criteria</label><div class="checkgrid" id="checklistForm"></div></div>
+      </div>
+      <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center"><span class="small">Checklist score: <span id="score" class="score">0%</span></span><button class="btn primary">Save trade</button></div>
+      </form>
+    </div>
+  </section>
+
+  <section id="trades" class="page hidden"><div class="card"><h2>Trade history</h2><div class="tablewrap" id="history"></div></div></section>
+
+  <section id="analytics" class="page hidden">
+    <div class="two">
+      <div class="card"><h2>Performance by session</h2><div id="sessionChart"></div></div>
+      <div class="card"><h2>Performance by setup</h2><div id="setupChart"></div></div>
+    </div>
+    <div class="two section">
+      <div class="card"><h2>Timeframe win rate</h2><div id="tfChart"></div></div>
+      <div class="card"><h2>Direction / trend type</h2><div id="directionStats"></div></div>
+    </div>
+  </section>
+
+  
+<section id="review" class="page hidden">
+ <div class="card">
+  <h2>Trader review</h2>
+  <div id="reviewStats" class="statgrid"></div>
+  <div class="section"><h2>Psychology breakdown</h2><div id="psychology"></div></div>
+  <div class="section"><h2>Setup grade performance</h2><div id="gradeStats"></div></div>
+ </div>
+</section>
+<section id="checklist" class="page hidden">
+    <div class="card"><h2>Entry checklist settings</h2><p class="small">These criteria appear every time you log a trade.</p><div id="checklistSettings"></div></div>
+  </section>
+</main>
+</div>
+
+<section id="calendar" class="page hidden">
+  <div class="card">
+    <div class="top"><h2>Trading calendar</h2><div><button class="btn" onclick="changeMonth(-1)">‹</button> <b id="calMonth"></b> <button class="btn" onclick="changeMonth(1)">›</button></div></div>
+    <div class="calendar" id="calendarGrid"></div>
+  </div>
+</section>
+
+<section id="prop" class="page hidden">
+  <div class="card">
+    <h2>Prop-firm risk monitor</h2>
+    <p class="small">Set your account values. The app tracks them locally and calculates drawdown from logged R and risk %.</p>
+    <div class="form">
+      <div class="field"><label>Starting balance ($)</label><input id="propStart" type="number" value="2500"></div>
+      <div class="field"><label>Max drawdown (%)</label><input id="propDD" type="number" value="10"></div>
+      <div class="field"><label>Daily loss limit (%)</label><input id="propDaily" type="number" value="5"></div>
+    </div>
+    <div class="grid section" id="propMetrics"></div>
+  </div>
+</section>
+<script>
+const KEY="tradeJournalPro_v1";
+const criteria=[
+"Higher-timeframe bias confirmed","Correct trading session","Setup identified",
+"Entry model confirmed","Liquidity / level respected","Confirmation received",
+"Stop-loss placed correctly","Minimum RR achieved","Risk within daily limit",
+"No revenge / FOMO trade","News checked","Mental state acceptable"
+];
+let data=JSON.parse(localStorage.getItem(KEY)||"[]");
+const $=id=>document.getElementById(id);
+function save(){localStorage.setItem(KEY,JSON.stringify(data));renderAll()}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function showPage(p){document.querySelectorAll(".page").forEach(x=>x.classList.add("hidden"));$(p).classList.remove("hidden");document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===p));$("title").textContent=p==="add"?"Add Trade":p==="trades"?"Trade History":p==="analytics"?"Analytics":p==="checklist"?"Entry Checklist":p==="calendar"?"Trading Calendar":p==="prop"?"Prop Risk Mode":p==="review"?"Trader Review":"Dashboard";renderAll()}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+function pct(a,b){return b?Math.round(a/b*100):0}
+function metrics(){
+ const n=data.length,w=data.filter(t=>t.outcome==="WIN").length,l=data.filter(t=>t.outcome==="LOSS").length,be=data.filter(t=>t.outcome==="BREAKEVEN").length;
+ const net=data.reduce((s,t)=>s+(+t.actualRR||0),0), avg=n?net/n:0;
+ return [["Total trades",n],["Win rate",pct(w,n)+"%"],["Net R",net.toFixed(2)+"R"],["Average R",avg.toFixed(2)+"R"],["Wins",w],["Losses",l],["Breakeven",be],["Avg checklist",pct(data.reduce((s,t)=>s+(t.checkScore||0),0),n)+"%"]];
+}
+function renderMetrics(){$("metrics").innerHTML=metrics().map(([a,b])=>`<div class="card metric"><div class="label">${a}</div><div class="value">${b}</div></div>`).join("")}
+function svgBar(rows,label="R"){
+ if(!rows.length)return '<div class="empty">No data yet.</div>';
+ const max=Math.max(1,...rows.map(x=>Math.abs(x.v))),w=620,h=220,p=28,bw=Math.max(18,(w-2*p)/rows.length-10);
+ let out=`<svg class="chart" viewBox="0 0 ${w} ${h}"><line x1="${p}" y1="${h/2}" x2="${w-p}" y2="${h/2}" stroke="#263241"/>`;
+ rows.forEach((r,i)=>{let x=p+i*((w-2*p)/rows.length)+5, bh=(Math.abs(r.v)/max)*75, y=r.v>=0?h/2-bh:h/2;out+=`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="4" fill="${r.v>=0?'#35d07f':'#ff6577'}"/><text x="${x+bw/2}" y="${h-8}" text-anchor="middle" fill="#91a0b2" font-size="10">${esc(r.k)}</text>`});out+="</svg>";return out}
+function svgPie(w,l,be){let total=w+l+be;if(!total)return '<div class="empty">No data yet.</div>';let vals=[w,l,be],names=["WIN","LOSS","BREAKEVEN"],colors=["#35d07f","#ff6577","#f6c85f"],a=-Math.PI/2,cx=120,cy=105,r=75,paths="";vals.forEach((v,i)=>{let a2=a+2*Math.PI*v/total;if(v){let x1=cx+r*Math.cos(a),y1=cy+r*Math.sin(a),x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2),large=a2-a>Math.PI?1:0;paths+=`<path d="M${cx} ${cy} L${x1} ${y1} A${r} ${r} 0 ${large} 1 ${x2} ${y2} Z" fill="${colors[i]}"/>`}a=a2});return `<div style="display:flex;align-items:center;gap:20px"><svg width="240" height="210" viewBox="0 0 240 210">${paths}<circle cx="${cx}" cy="${cy}" r="40" fill="#111821"/></svg><div class="legend">${names.map((n,i)=>`<span>${n}: ${vals[i]} (${Math.round(vals[i]/total*100)}%)</span>`).join("")}</div></div>`}
+function aggregate(field){let m={};data.forEach(t=>{let k=t[field]||"Unknown";m[k]=(m[k]||0)+(+(t.actualRR||0))});return Object.entries(m).map(([k,v])=>({k,v})).sort((a,b)=>b.v-a.v)}
+function renderDashboard(){renderMetrics();let months={};data.forEach(t=>{let k=(t.date||"").slice(0,7)||"Unknown";months[k]=(months[k]||0)+(+t.actualRR||0)});$("monthlyChart").innerHTML=svgBar(Object.entries(months).sort().map(([k,v])=>({k:k==="Unknown"?k:k.slice(2),v})));$("outcomeChart").innerHTML=svgPie(data.filter(t=>t.outcome==="WIN").length,data.filter(t=>t.outcome==="LOSS").length,data.filter(t=>t.outcome==="BREAKEVEN").length);$("recent").innerHTML=table(data.slice().reverse().slice(0,8))}
+function table(rows){if(!rows.length)return '<div class="empty">No trades logged yet. Add your first trade.</div>';return `<div class="tablewrap"><table class="table"><thead><tr><th>Date</th><th>Pair</th><th>Session</th><th>Setup</th><th>TF</th><th>Outcome</th><th>Actual RR</th><th>Checklist</th><th></th></tr></thead><tbody>${rows.map((t,i)=>`<tr><td>${esc(t.date)}</td><td>${esc(t.pair)}</td><td>${esc(t.session)}</td><td>${esc(t.setup)}</td><td>${esc(t.tf)}</td><td><span class="pill ${t.outcome==="WIN"?"win":t.outcome==="LOSS"?"loss":"be"}">${esc(t.outcome)}</span></td><td class="${(+t.actualRR||0)>=0?'green':'red'}">${(+t.actualRR||0).toFixed(2)}R</td><td>${t.checkScore||0}%</td><td><button class="btn" onclick="deleteTrade(${data.indexOf(t)})">Delete</button></td></tr>`).join("")}</tbody></table></div>`}
+function renderAnalytics(){$("sessionChart").innerHTML=svgBar(aggregate("session"));$("setupChart").innerHTML=svgBar(aggregate("setup"));let tf={};data.forEach(t=>{let k=t.tf||"Unknown";tf[k]??={w:0,n:0};tf[k].n++;if(t.outcome==="WIN")tf[k].w++});$("tfChart").innerHTML=svgBar(Object.entries(tf).map(([k,v])=>({k,v:v.n?v.w/v.n*100:0})));$("directionStats").innerHTML=["direction","trendType"].map(f=>`<h3>${f==="direction"?"Direction":"Pro / Counter"}</h3>`+Object.entries(data.reduce((m,t)=>(m[t[f]]??={n:0,w:0,r:0},m[t[f]].n++,t.outcome==="WIN"&&m[t[f]].w++,m[t[f]].r+=(+t.actualRR||0),m),{})).map(([k,v])=>`<p>${esc(k)} — ${v.w}/${v.n} wins (${pct(v.w,v.n)}%) · ${v.r.toFixed(2)}R</p>`).join("")).join("")}
+function renderHistory(){$("history").innerHTML=table(data.slice().reverse())}
+function renderChecklist(){ $("checklistSettings").innerHTML=criteria.map((c,i)=>`<div class="check"><input type="checkbox" checked disabled> ${esc(c)}</div>`).join("")}
+function renderChecklistForm(){ $("checklistForm").innerHTML=criteria.map((c,i)=>`<label class="check"><input type="checkbox" class="crit" data-i="${i}">${esc(c)}</label>`).join("");document.querySelectorAll(".crit").forEach(x=>x.onchange=updateScore)}
+function updateScore(){let a=[...document.querySelectorAll(".crit")],n=a.filter(x=>x.checked).length;$("score").textContent=Math.round(n/a.length*100)+"%"}
+$("tradeForm").onsubmit=e=>{e.preventDefault();let checks=[...document.querySelectorAll(".crit")],score=Math.round(checks.filter(x=>x.checked).length/checks.length*100);data.push({date:$("date").value,open:$("open").value,close:$("close").value,pair:$("pair").value,direction:$("direction").value,outcome:$("outcome").value,session:$("session").value,entryType:$("entryType").value,setup:$("setup").value,tf:$("tf").value,trendType:$("trendType").value,bias:$("bias").value,plannedRR:$("plannedRR").value,actualRR:$("actualRR").value,risk:$("risk").value,pips:$("pips").value,entry:$("entry").value,sl:$("sl").value,notes:$("notes").value,grade:$("grade").value,emotion:$("emotion").value,execution:$("execution").value,checkScore:score,createdAt:Date.now()});save();e.target.reset();$("pair").value="XAUUSD";showPage("dashboard")}
+function deleteTrade(i){if(confirm("Delete this trade?")){data.splice(i,1);save()}}
+function exportCSV(){
+ if(!data.length){alert("No trades to export.");return}
+ const cols=["date","open","close","pair","direction","outcome","session","entryType","setup","tf","trendType","bias","plannedRR","actualRR","risk","pips","entry","sl","checkScore","notes"];
+ const csv=[cols.join(","),...data.map(t=>cols.map(c=>`"${String(t[c]??"").replace(/"/g,'""')}"`).join(","))].join("\n");
+ const blob=new Blob([csv],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="trade-journal.csv";a.click();URL.revokeObjectURL(a.href)
+}
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="trade-journal-backup.json";a.click();URL.revokeObjectURL(a.href)}
+let calDate=new Date();
+function changeMonth(d){calDate.setMonth(calDate.getMonth()+d);renderCalendar()}
+function renderCalendar(){
+ const y=calDate.getFullYear(),m=calDate.getMonth(),name=calDate.toLocaleString("en-IN",{month:"long",year:"numeric"});
+ $("calMonth").textContent=name;
+ const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
+ let out=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(x=>`<div class="calhead">${x}</div>`).join("");
+ for(let i=0;i<first;i++)out+="<div></div>";
+ for(let d=1;d<=days;d++){let key=`${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`,ts=data.filter(t=>t.date===key),r=ts.reduce((s,t)=>s+(+t.actualRR||0),0);out+=`<div class="day ${r>0?"pos":r<0?"neg":""}"><b>${d}</b>${ts.length?`<div>${ts.length} trade${ts.length>1?"s":""}</div><div class="r ${r>=0?"green":"red"}">${r.toFixed(2)}R</div>`:""}</div>`}
+ $("calendarGrid").innerHTML=out;
+}
+function renderProp(){
+ const start=+$("propStart").value||2500,dd=+$("propDD").value||10,daily=+$("propDaily").value||5;
+ const netR=data.reduce((s,t)=>s+(+t.actualRR||0),0),riskAvg=data.length?data.reduce((s,t)=>s+(+t.risk||0),0)/data.length:0;
+ const equity=start*(1+(netR*(riskAvg/100))),maxLoss=start*dd/100,loss=start-equity;
+ const used=Math.max(0,loss),remaining=Math.max(0,maxLoss-used);
+ $("propMetrics").innerHTML=[["Start balance","$"+start.toFixed(2)],["Estimated equity","$"+equity.toFixed(2)],["Net R",netR.toFixed(2)+"R"],["Avg logged risk",riskAvg.toFixed(2)+"%"],["DD used","$"+used.toFixed(2)+" / $"+maxLoss.toFixed(2)],["DD remaining","$"+remaining.toFixed(2)],["Daily limit",daily+"%"]].map(([a,b])=>`<div class="card metric"><div class="label">${a}</div><div class="value">${b}</div></div>`).join("");
+}
+$("propStart").oninput=renderProp;$("propDD").oninput=renderProp;$("propDaily").oninput=renderProp;
+
+function renderReview(){
+ const n=data.length,w=data.filter(t=>t.outcome==="WIN").length,revenge=data.filter(t=>t.emotion==="Revenge").length,fomo=data.filter(t=>t.emotion==="FOMO").length;
+ $("reviewStats").innerHTML=[["Trades",n],["Win rate",pct(w,n)+"%"],["Revenge trades",revenge],["FOMO trades",fomo]].map(x=>`<div class="statbox"><div class="small">${x[0]}</div><b>${x[1]}</b></div>`).join("");
+ const psych={};data.forEach(t=>{let k=t.emotion||"Unknown";psych[k]??={n:0,w:0,r:0};psych[k].n++;if(t.outcome==="WIN")psych[k].w++;psych[k].r+=+(t.actualRR||0)});
+ $("psychology").innerHTML=Object.entries(psych).sort((a,b)=>b[1].n-a[1].n).map(([k,v])=>`<div style="margin:10px 0"><div style="display:flex;justify-content:space-between"><span>${esc(k)}</span><span>${pct(v.w,v.n)}% win · ${v.r.toFixed(2)}R</span></div><div class="progress"><i style="width:${pct(v.w,v.n)}%"></i></div></div>`).join("")||'<div class="empty">No data yet.</div>';
+ const grades={};data.forEach(t=>{let k=t.grade||"Unrated";grades[k]??={n:0,w:0,r:0};grades[k].n++;if(t.outcome==="WIN")grades[k].w++;grades[k].r+=+(t.actualRR||0)});
+ $("gradeStats").innerHTML=Object.entries(grades).map(([k,v])=>`<div style="margin:10px 0"><b>${esc(k)}</b> — ${v.n} trades · ${pct(v.w,v.n)}% win · ${v.r.toFixed(2)}R</div>`).join("")||'<div class="empty">No data yet.</div>';
+}
+function renderAll(){renderDashboard();renderHistory();renderAnalytics();renderChecklist();renderCalendar();renderProp();renderReview()}
+$("date").value=new Date().toISOString().slice(0,10);renderChecklistForm();renderAll();
+</script>
+</body>
+</html>
